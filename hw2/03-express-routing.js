@@ -22,12 +22,46 @@ const routes = [
 ];
 
 app.get('/', (req, res) => {
+  const links = routes
+    .map((route) => `<li><a href="/${route}">${route}</a></li>`)
+    .join('');
   res.status(200);
   res.set({ 'Content-Type': 'text/html' });
-  res.send('Express Routing Exercise');
+  res.send(`<h1>Express Routing Exercise</h1><ul>${links}</ul>`);
 });
 
-// Add your code here
+app.get('/welcome', (req, res) => {
+  res
+    .status(200)
+    .type('html')
+    .send('<h1>Welcome!</h1><p>Thanks for stopping by the Express routing exercise.</p>');
+});
+
+app.get('/redirect', (req, res) => {
+  res.redirect(302, '/redirected');
+});
+
+app.get('/redirected', (req, res) => {
+  res
+    .status(200)
+    .type('html')
+    .send('<h1>You have been redirected</h1><p>You came from /redirect.</p>');
+});
+
+app.get('/cache', (req, res) => {
+  res.set('Cache-Control', 'max-age=86400');
+  res.status(200).type('html').send('<p>this resource was cached</p>');
+});
+
+app.get('/cookie', (req, res) => {
+  res.cookie('hello', 'world');
+  res.status(200).type('text').send('cookies… yummm');
+});
+
+// Catch all for any route not matched above. This must stay after every other route.
+app.use((req, res) => {
+  res.status(404).type('html').send('<h1>404 - page not found</h1>');
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
