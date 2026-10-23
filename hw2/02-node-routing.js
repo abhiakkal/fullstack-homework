@@ -21,9 +21,42 @@ const server = http.createServer((req, res) => {
     'other',
   ];
 
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('Node Routing Exercise');
-  res.end();
+  // Ignore any query string so /welcome?name=abhi still matches /welcome
+  const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+
+  if (pathname === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.write('<h1>Node Routing Exercise</h1><ul>');
+    routes.forEach((route) => {
+      res.write(`<li><a href="/${route}">${route}</a></li>`);
+    });
+    res.write('</ul>');
+    res.end();
+  } else if (pathname === '/welcome') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end('<h1>Welcome!</h1><p>Thanks for stopping by the Node routing exercise.</p>');
+  } else if (pathname === '/redirect') {
+    res.writeHead(302, { Location: '/redirected' });
+    res.end();
+  } else if (pathname === '/redirected') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end('<h1>You have been redirected</h1><p>You came from /redirect.</p>');
+  } else if (pathname === '/cache') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'max-age=86400',
+    });
+    res.end('<p>this resource was cached</p>');
+  } else if (pathname === '/cookie') {
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Set-Cookie': 'hello=world',
+    });
+    res.end('cookies… yummm');
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end('<h1>404 - page not found</h1>');
+  }
 });
 
 server.listen(port, () => {
