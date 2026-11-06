@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Locations
+  p.summary #{totalLocations} locations across #{types.length} types.
+  table.data-table
+    thead
+      tr
+        th(scope='col') Type
+        th.numeric(scope='col') Locations
+    tbody
+      each type in types
+        tr
+          td= type.name
+          td.numeric= type.count
+    tfoot
+      tr
+        th(scope='row') Total
+        td.numeric= totalLocations

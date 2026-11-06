@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Characters
+  p.summary Showing the first #{characters.length} characters from the API.
+  ul.card-grid
+    each character in characters
+      - const status = (character.status || 'unknown').toLowerCase()
+      li.card
+        img(src=character.image alt=`Picture of ${character.name}` loading='lazy' width='300' height='300')
+        .card-body
+          h2= character.name
+          p
+            strong Species:
+            |  #{character.species || 'unknown'}
+          p
+            strong Status:
+            |  #[span(class=`status status-${status}`) #{character.status || 'unknown'}]

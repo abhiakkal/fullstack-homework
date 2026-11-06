@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Species
+  p.summary
+    | #{totalCharacters} characters across #{species.length} species.
+    | Expand a species to see every character in it.
+  ul.group-list
+    each group in species
+      li
+        details
+          summary
+            span.group-name= group.name
+            span.count #{group.count} #{group.count === 1 ? 'character' : 'characters'}
+          ul.name-list
+            each name in group.names
+              li= name
