@@ -1,0 +1,24 @@
+- const navLinks = [['/home', 'Home'], ['/characters', 'Characters'], ['/species', 'Species'], ['/locations', 'Locations']]
+
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title #{title} | Rick and Morty Explorer
+    link(rel='stylesheet' href='/styles.css')
+  body
+    header.site-header
+      a.brand(href='/home') Rick and Morty Explorer
+      nav
+        ul
+          each link in navLinks
+            li
+              a(href=link[0] class={ active: currentPath === link[0] }) #{link[1]}
+    main
+      block content
+    footer.site-footer
+      p
+        | Data from the
+        |
+        a(href='https://rickandmortyapi.com/') Rick and Morty API

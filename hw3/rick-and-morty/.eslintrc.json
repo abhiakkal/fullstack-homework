@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "env": { "node": true, "es2022": true },
+  "extends": ["airbnb-base"],
+  "globals": { "fetch": "readonly", "AbortSignal": "readonly" },
+  "rules": {
+    "no-console": "off"
+  }
+}

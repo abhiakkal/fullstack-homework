@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  section.hero
+    h1 Welcome to the Rick and Morty Explorer
+    p.
+      Wubba lubba dub dub! This app pulls live data from the Rick and Morty API
+      and renders it on the server with Express and Pug.
+  ul.route-list
+    li
+      a(href='/characters') Characters
+      span The first 100 characters with their picture, species, and status.
+    li
+      a(href='/species') Species
+      span How many characters belong to each species, and who they are.
+    li
+      a(href='/locations') Locations
+      span How many locations there are of each type.
